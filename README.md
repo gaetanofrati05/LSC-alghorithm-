@@ -1,51 +1,81 @@
-# LSC-alghorithm-
-Hi guys! This is a implementation of LSC alghorithm. 
-Let's explain what is LSC. LSC means -longest subsequence common by two strings. We have two strings 
-and we want know to find the longest subsequence common that's an example:
+<h1>🧬 Longest Common Subsequence (LCS) Algorithm</h1>
 
-Input:
-Strings a[m] and b[n] n and m is the size of the strings 
+<p>
+  This repository contains a high-performance implementation of the <strong>LCS (Longest Common Subsequence)</strong> 
+  algorithm, solved efficiently using <strong>Dynamic Programming</strong>.
+</p>
 
-Output: 
-A subsequence a[i1]...a[ik] of , a subsequence b[j1]...b[jk] such that 
- a[i1=b[j1]...a[ik]=b[jk] with k big as possible 
- 
-LSC applications: 
+<hr />
 
- 🔧 Version Control (Git, SVN)
+<h2>📝 What is LCS?</h2>
+<p>
+  Given two strings, the goal is to find the longest subsequence common to both. A <em>subsequence</em> 
+  is a sequence that appears in the same relative order, but not necessarily contiguously.
+</p>
 
-The git diff command uses LCS to show differences between files, highlighting added and removed lines.
-🧬 Bioinformatics
-Comparison of DNA, RNA and protein sequences to find genetic similarities between organisms.
+<blockquote>
+  <strong>Example:</strong><br />
+  <strong>Input:</strong> String <code>A</code> of size <code>m</code>, String <code>B</code> of size <code>n</code>.<br />
+  <strong>Output:</strong> A subsequence $A[i_1 \dots i_k]$ and $B[j_1 \dots j_k]$ such that 
+  $A[i_1] = B[j_1] \dots A[i_k] = B[j_k]$, making the length <strong>$k$ as large as possible</strong>.
+</blockquote>
 
-📝 Spell Checkers and Autocorrect
-Calculation of the edit distance between words, useful for suggesting spelling corrections.
+---
 
-🔒 Plagiarism Detection
-Comparison of documents to find portions of text in common.
+<h2>🚀 Real-World Applications</h2>
+<p>The LCS algorithm is a fundamental building block in computer science and is widely used in:</p>
 
-🗜️ Data Compression
-Algorithms like diff and patch use LCS to represent only the differences between file versions, reducing storage space.
+<ul>
+  <li>🔧 <strong>Version Control Systems (Git, SVN):</strong> The <code>git diff</code> command uses LCS to find and highlight added/removed lines between file versions.</li>
+  <li>🧬 <strong>Bioinformatics:</strong> Comparing DNA, RNA, and protein sequences to discover genetic similarities between organisms.</li>
+  <li>📝 <strong>Spell Checkers:</strong> Calculating the edit distance between words to suggest the best auto-corrections.</li>
+  <li>🔒 <strong>Plagiarism Detection:</strong> Comparing documents to find shared portions of text.</li>
+  <li>🗜️ <strong>Data Compression:</strong> Tools like <code>diff</code> and <code>patch</code> use LCS to store only the delta (differences) between files, saving disk space.</li>
+  <li>🤖 <strong>NLP (Natural Language Processing):</strong> Computing sentence similarity in machine translation and AI chatbots.</li>
+  <li>🎮 <strong>Gesture Recognition:</strong> Matching sequences of inputs or moves in video games.</li>
+</ul>
 
-🤖 NLP – Natural Language Processing
-Calculation of sentence similarity in machine translation and question-answering systems.
+---
 
-🎮 Input Sequence Comparison
-In video games and gesture recognition systems, to recognize sequences of moves.
+<h2>🧠 Dynamic Programming & Recurrence Relation</h2>
+<p>
+  To solve the problem efficiently without repeating calculations, we break it down into smaller subproblems 
+  using a 2D matrix $c[i, j]$, which represents the length of the LCS of the prefixes $A[0 \dots i]$ and $B[0 \dots j]$.
+</p>
 
-The first steps is to formulate the problem in ricursive way cause we implement with dynamic programming technique 
-and there are two possible case:
+<h3>The Recurrence Relation:</h3>
 
-Case 1: a[i]=b[j] 
-This case is very simple we take the letter and be worth c[i,k]= k and now we solve the problem for instance
-c[i,j]=c[i-1,j-1] +1 
+$$c[i, j] = 
+\begin{cases} 
+0 & \text{if } i = 0 \text{ or } j = 0 \\
+c[i-1, j-1] + 1 & \text{if } A[i] = B[j] \\
+\max(c[i-1, j], c[i, j-1]) & \text{if } A[i] \neq B[j] 
+\end{cases}$$
 
-Case 2: a[i]!=b[j] 
-In this there are two possible ways:
+<br />
 
-1) a[i] don't be part of the longest common subsequence or b[j] don't be part of. So what we choose?
-   we take both and choose that return the max subsquence that is to say
-   c[i,j]= max{c[i-1,j], c[i,j-1]}
+<h4>Detailed Cases:</h4>
+<ul>
+  <li>
+    <strong>Case 1: $A[i] == B[j]$ (Match)</strong><br />
+    The current characters are identical! We include this character in our subsequence and look at the optimal solution for the remaining prefixes:
+    <br /><code>c[i][j] = c[i-1][j-1] + 1</code>
+  </li>
+  <li>
+    <strong>Case 2: $A[i] \neq B[j]$ (Mismatch)</strong><br />
+    The characters don't match. This means either $A[i]$ or $B[j]$ is not part of the current optimal LCS. 
+    We drop one at a time and choose the path that yields the maximum length:
+    <br /><code>c[i][j] = max(c[i-1][j], c[i][j-1])</code>
+  </li>
+</ul>
 
-And that's all with recurrence relation we can simplely write the alghorithm. 
-   
+---
+
+<h2>🤝 Contributing & Support</h2>
+<p>
+  With this recurrence formula, the algorithm can be easily written using an iterative bottom-up approach.
+</p>
+<p>
+  If you want to suggest optimizations, add space-complexity improvements (like reducing the matrix to two rows), 
+  or just support the project, <strong>your help is highly appreciated!</strong> Feel free to open a pull request.
+</p>
